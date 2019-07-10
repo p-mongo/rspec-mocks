@@ -76,9 +76,9 @@ module RSpec
       # @private
       def raise_expectation_error(message, expected_received_count, argument_list_matcher,
                                   actual_received_count, expectation_count_type, args,
-                                  backtrace_line=nil, source_id=nil)
+                                  backtrace_line=nil, source_id=nil, args_history=nil)
         expected_part = expected_part_of_expectation_error(expected_received_count, expectation_count_type, argument_list_matcher)
-        received_part = received_part_of_expectation_error(actual_received_count, args)
+        received_part = received_part_of_expectation_error(actual_received_count, args, args_history)
         __raise "(#{intro(:unwrapped)}).#{message}#{format_args(args)}\n    #{expected_part}\n    #{received_part}", backtrace_line, source_id
       end
       # rubocop:enable Metrics/ParameterLists
@@ -247,11 +247,17 @@ module RSpec
 
     private
 
-      def received_part_of_expectation_error(actual_received_count, args)
+      def received_part_of_expectation_error(actual_received_count, args, args_history=nil)
+        extra = ''
+        if args_history
+          args_history.each_with_index do |arg, index|
+            extra += "\n        call #{index+1}: #{arg.inspect}"
+          end
+        end
         "received: #{count_message(actual_received_count)}" +
           method_call_args_description(args) do
             actual_received_count > 0 && args.length > 0
-          end
+          end + extra
       end
 
       def expected_part_of_expectation_error(expected_received_count, expectation_count_type, argument_list_matcher)

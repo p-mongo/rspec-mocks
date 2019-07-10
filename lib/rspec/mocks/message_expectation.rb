@@ -424,6 +424,8 @@ module RSpec
         end
 
         def invoke(parent_stub, *args, &block)
+          @args_history ||= []
+          @args_history << args
           invoke_incrementing_actual_calls_by(1, true, parent_stub, *args, &block)
         end
 
@@ -493,7 +495,7 @@ module RSpec
             @error_generator.raise_expectation_error(
               @message, @expected_received_count, @argument_list_matcher,
               @actual_received_count, expectation_count_type, expected_args,
-              @expected_from, exception_source_id
+              @expected_from, exception_source_id, @args_history
             )
           else
             @error_generator.raise_similar_message_args_error(
