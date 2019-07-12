@@ -425,7 +425,12 @@ module RSpec
 
         def invoke(parent_stub, *args, &block)
           @args_history ||= []
-          @args_history << args
+          begin
+            fail
+          rescue => e
+            backtrace = e.backtrace
+          end
+          @args_history << [args, backtrace]
           invoke_incrementing_actual_calls_by(1, true, parent_stub, *args, &block)
         end
 
