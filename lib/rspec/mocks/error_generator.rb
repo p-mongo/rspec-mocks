@@ -250,8 +250,11 @@ module RSpec
       def received_part_of_expectation_error(actual_received_count, args, args_history=nil)
         extra = ''
         if args_history
-          args_history.each_with_index do |arg, index|
-            extra += "\n        call #{index+1}: #{arg.inspect}"
+          args_history.each_with_index do |(arg, backtrace), index|
+            extra += "\n      call #{index+1}: #{arg.inspect}"
+            backtrace.each do |line|
+              extra += "\n        from #{line}"
+            end
           end
         end
         "received: #{count_message(actual_received_count)}" +
