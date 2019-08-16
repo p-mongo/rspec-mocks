@@ -47,7 +47,7 @@ module RSpec
 
       # @private
       def raise_unexpected_message_error(message, args)
-        __raise "#{intro} received unexpected message :#{message} with #{format_args(args)}"
+        __raise "#{intro} received unexpected message :#{message} with #{format_args(args)}\nDouble instantiated from:\n#{@target._rspec_backtrace.map { |line| '  ' + line }.join("\n")}"
       end
 
       # @private
