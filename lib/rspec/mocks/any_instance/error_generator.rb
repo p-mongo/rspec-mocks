@@ -12,9 +12,17 @@ module RSpec
           __raise "#{klass} does not implement ##{method_name}"
         end
 
-        def raise_message_already_received_by_other_instance_error(method_name, object_inspect, invoked_instance)
+        def raise_message_already_received_by_other_instance_error(method_name, object_inspect, invoked_instance, invoked_backtrace)
+          begin
+            raise RuntimeError
+          rescue => e
+            backtrace = e.backtrace
+          end
           __raise "The message '#{method_name}' was received by #{object_inspect} " \
-                  "but has already been received by #{invoked_instance}"
+                  "but has already been received by #{invoked_instance}.\nCurrent backtrace:\n" +
+                  backtrace.map { |line| '  ' + line }.join("\n") +
+                  "\nPrevious backtrace: \n" +
+                  invoked_backtrace.map { |line| '  ' + line }.join("\n")
         end
 
         def raise_not_supported_with_prepend_error(method_name, problem_mod)
