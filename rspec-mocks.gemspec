@@ -3,22 +3,22 @@ $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 require "rspec/mocks/version"
 
 Gem::Specification.new do |s|
-  s.name        = "rspec-mocks"
+  s.name        = "rspec-mocks-diag"
   s.version     = RSpec::Mocks::Version::STRING
   s.platform    = Gem::Platform::RUBY
   s.license     = "MIT"
   s.authors     = ["Steven Baker", "David Chelimsky", "Myron Marston"]
   s.email       = "rspec@googlegroups.com"
-  s.homepage    = "https://github.com/rspec/rspec-mocks"
+  s.homepage    = "https://github.com/p-mongo/rspec-mocks"
   s.summary     = "rspec-mocks-#{RSpec::Mocks::Version::STRING}"
-  s.description = "RSpec's 'test double' framework, with support for stubbing and mocking"
+  s.description = "rspec-mocks with additional diagnostics"
 
   s.metadata = {
-    'bug_tracker_uri'   => 'https://github.com/rspec/rspec-mocks/issues',
-    'changelog_uri'     => "https://github.com/rspec/rspec-mocks/blob/v#{s.version}/Changelog.md",
+    'bug_tracker_uri'   => 'https://github.com/p-mongo/rspec-mocks/issues',
+    'changelog_uri'     => "https://github.com/p-mongo/rspec-mocks/blob/v#{s.version}/Changelog.md",
     'documentation_uri' => 'https://rspec.info/documentation/',
     'mailing_list_uri'  => 'https://groups.google.com/forum/#!forum/rspec',
-    'source_code_uri'   => 'https://github.com/rspec/rspec-mocks',
+    'source_code_uri'   => 'https://github.com/p-mongo/rspec-mocks',
   }
 
   s.files            = `git ls-files -- lib/*`.split("\n")
