@@ -15,7 +15,17 @@ module RSpec
           @name = name
         end
         assign_stubs(stubs)
+
+        begin
+          raise RuntimeError
+        rescue => e
+          @_rspec_backtrace = e.backtrace.dup.tap do |bt|
+            bt.shift
+          end
+        end
       end
+
+      attr_reader :_rspec_backtrace
 
       # Tells the object to respond to all messages. If specific stub values
       # are declared, they'll work as expected. If not, the receiver is
