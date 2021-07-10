@@ -390,6 +390,7 @@ module RSpec
           @expectation_type = type
           @ordered = false
           @at_least = @at_most = @exactly = nil
+          @args_history = nil
 
           # Initialized to nil so that we don't allocate an array for every
           # mock or stub. See also comment in `and_yield`.
